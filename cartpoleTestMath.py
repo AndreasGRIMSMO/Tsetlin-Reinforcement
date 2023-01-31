@@ -1,5 +1,5 @@
 import statistics
-
+from pyTsetlinMachine.tools import Binarizer
 import gym
 #import pyglet
 
@@ -48,6 +48,7 @@ for i in range(100000):
     plusMinus.append(b)
     obs, reward, done, info = eval_env.step(action)
     score += 1
+    print(reward)
     if done:
         obs = eval_env.reset()
         scores.append(score)

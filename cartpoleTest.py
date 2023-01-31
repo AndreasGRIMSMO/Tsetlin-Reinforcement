@@ -26,8 +26,8 @@ states = []
 plusMinus = []
 obs = eval_env.reset()
 for i in range(100000):
-    if i%20 == 0:
-        print(i)
+    #if i%20 == 0:
+    #    print(i)
     obsTemp = obs*100000
     action, _state = model.predict(obs, deterministic=True)
     #print(action)
@@ -47,6 +47,7 @@ for i in range(100000):
     plusMinus.append(b)
     obs, reward, done, info = eval_env.step(action)
     if done:
+        print(reward)
         obs = eval_env.reset()
         #eval_env.render()
 
