@@ -22,7 +22,7 @@ eval_env = gym.make("CartPole-v1")
 scores = []
 score = 0
 obs = eval_env.reset()
-steps = 10000000 #10000000 is too much
+steps = 10000 #10000000 is too much
 explorationRate = 1.0
 rateChange = 0.01
 stepChange = steps * rateChange
@@ -30,13 +30,18 @@ stepChange = steps * rateChange
 # initialize tsetlin
 obsTemp = np.array([obs])
 state = b.transform(obsTemp)
-obsInit = np.array([state, state])
+obsInit = np.array([state[0], state[0]])
 predInit = np.array([1, 0])
-tm.fit(obsInit, predInit, epochs=1)
+print("First fit")
+tm.fit(obsInit, predInit, epochs=0)
 del(obsInit)
 del(predInit)
-
+states = []
+actions = []
+print("Starting loop")
 for i in range(steps):
+    #if i % 100 == 0:
+    #    print(i)
     # Exploration and exploitation part
     obsTemp = np.array([obs])
     firstAngle = abs(obs[2])
@@ -58,14 +63,20 @@ for i in range(steps):
     secondAngle = abs(obs[2])
     # print(obs[2])
     #if secondAngle >= 0.05 or firstAngle - secondAngle > 0:
+    states.append(state)
     if firstAngle - secondAngle > 0:
-        tm.fit(state, np.array([action[0]]), epochs=1)
+        tm.fit(state, np.array([action[0]]), epochs=1,incremental=True)
+        #actions.append(action[0])
     else:
         if action[0] == 0:
-            tm.fit(state, np.array([1]), epochs=1)
+            tm.fit(state, np.array([1]), epochs=1,incremental=True)
+            #actions.append(1)
         else:
-            tm.fit(state, np.array([0]), epochs=1)
+            tm.fit(state, np.array([0]), epochs=1,incremental=True)
+            #actions.append(0)
+
     if done:
+        #tm.fit(np.array(states), np.array(actions), epochs=1)
         # if action[0] == 0:
         #    tm.fit(state, np.array([1]), epochs=1)
         # else:
