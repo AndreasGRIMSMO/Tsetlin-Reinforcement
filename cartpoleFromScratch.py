@@ -6,14 +6,14 @@ import random
 from pyTsetlinMachine.tools import Binarizer
 import gym
 
-X = np.load("statesCartPoleV5.npy")
-Y = np.loadtxt("actionsCartPoleV5.txt", dtype=int)
+X = np.load("statesCartPoleV7.npy")
+Y = np.loadtxt("actionsCartPoleV7.txt", dtype=int)
 print(type(Y))
 b = Binarizer(max_bits_per_feature=6)
 b.fit(X)
 del(X)
 del(Y)
-clauses = 500
+clauses = 1000
 s = 3.9
 thresh = 0.4
 tm = MultiClassTsetlinMachine(clauses, clauses * thresh, s)
@@ -22,10 +22,11 @@ eval_env = gym.make("CartPole-v1")
 scores = []
 score = 0
 obs = eval_env.reset()
-steps = 10000 #10000000 is too much
+steps = 100000 #10000000 is too much
 explorationRate = 1.0
 rateChange = 0.01
 stepChange = steps * rateChange
+minExp = 0.1
 
 # initialize tsetlin
 obsTemp = np.array([obs])
@@ -55,6 +56,8 @@ for i in range(steps):
         obs, reward, done, info = eval_env.step(action[0])
     if i % stepChange == 0 and i != 0 and explorationRate <= 0.1:
         explorationRate -= rateChange
+        if explorationRate < minExp:
+            explorationRate = minExp
     # elif i == 0:
     #    obsInit = np.array([obs, obs])
     #    predInit = np.array([1, 0])
