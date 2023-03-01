@@ -89,7 +89,8 @@ search_space = {
     "clauses": tune.grid_search([500, 1000, 3000, 5000]),
     "thresh": tune.grid_search([0.1, 0.3, 0.4]),
     "s": tune.grid_search([1.5, 2.7, 3.9, 10, 25]),
-    "bits_per_feature": tune.grid_search([4, 6, 8, 10, 12])
+    "bits_per_feature": tune.grid_search([4, 6, 8, 10, 12]),
+    "number_of_bits": tune.grid_search([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
 }
 
 tuner = tune.Tuner(objective, param_space=search_space)
