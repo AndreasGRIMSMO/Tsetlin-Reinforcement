@@ -27,6 +27,7 @@ states = []
 obs = eval_env.reset()
 score = 0
 scores = []
+
 for i in range(100000):
     if i%200 == 0:
         print(i)
@@ -72,9 +73,9 @@ print(std)
 
 newArray = np.array(states)
 
-with open('statesCartPoleV5.npy', 'wb') as f:
+with open('statesCartPoleV6.npy', 'wb') as f:
     np.save(f, newArray)
 
-with open('actionsCartPoleV5.txt', 'w') as f:
+with open('actionsCartPoleV6.txt', 'w') as f:
     for line in actions:
         f.write(f"{line}\n")
