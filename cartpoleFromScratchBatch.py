@@ -5,6 +5,7 @@ from pyTsetlinMachine.tm import MultiClassTsetlinMachine
 import random
 from pyTsetlinMachine.tools import Binarizer
 import gym
+from tmu.models.classification.vanilla_classifier import TMClassifier
 
 X = np.load("states/statesCartPoleV7.npy")
 Y = np.loadtxt("actions/actionsCartPoleV7.txt", dtype=int)
@@ -16,7 +17,8 @@ del (Y)
 clauses = 500
 s = 3.9
 thresh = clauses * 0.3
-tm = MultiClassTsetlinMachine(clauses, thresh, s)
+# tm = MultiClassTsetlinMachine(clauses, thresh, s)
+tm = TMClassifier(clauses, thresh, s, incremental=True)
 
 eval_env = gym.make("CartPole-v1")
 scores = []
@@ -70,7 +72,7 @@ for i in range(steps):
     secondAngle = abs(obs[2])
 
     if currentBatchNum == batchSize:
-        tm.fit(np.array(states), np.array(actions), epochs=1, incremental=True)
+        tm.fit(np.array(states), np.array(actions), epochs=1)
         currentBatchNum = 0
         actions = []
         states = []
@@ -79,7 +81,7 @@ for i in range(steps):
         obs = eval_env.reset()
         scores.append(score)
         if score >= 499:
-            tm.fit(np.array(states), np.array(actions), epochs=1, incremental=True)
+            tm.fit(np.array(states), np.array(actions), epochs=1)
         else:
             currentBatchNum = 0
             actions = []
