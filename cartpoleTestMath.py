@@ -74,11 +74,11 @@ for i in range(len(states)):
 for i in range(len(states)):
     states[i] = "".join(states[i])
 
-with open('statesCartPoleV3.txt', 'w') as f:
+with open('states/statesCartPoleMath.txt', 'w') as f:
     for line in states:
         l = " ".join(line)
         f.write(f"{l}\n")
 
-with open('actionsCartPoleV3.txt', 'w') as f:
+with open('actions/actionsCartPoleMath.txt', 'w') as f:
     for line in actions:
         f.write(f"{line}\n")
