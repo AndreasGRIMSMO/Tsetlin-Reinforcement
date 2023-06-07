@@ -30,7 +30,7 @@ def ramToBin(obs):
 tm = TMClassifier(clauses, thresh, s, incremental=True)
 counting = 0
 video_env = gym.make("Pong-ram-v4", render_mode="rgb_array")
-video_env = gym.wrappers.RecordVideo(video_env, 'video1', episode_trigger=lambda episode_id: True)
+video_env = gym.wrappers.RecordVideo(video_env, 'video7', episode_trigger=lambda episode_id: True)
 video_number = 0
 
 

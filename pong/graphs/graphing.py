@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 
 lines_to_read = []
-with open('pong_results.txt', 'r') as file:
+with open('6.txt', 'r') as file:
     for i, line in enumerate(file):
         if i >= 6 and (i - 6) % 7 == 0:
             lines_to_read.append(line.strip())
@@ -22,5 +22,4 @@ plt.plot(numbers_list,color='g')
 plt.ylabel('reward')
 plt.xlabel("episodes")
 plt.title("Highest rewards from the TM learning pong from scratch")
-plt.legend()
 plt.show()
